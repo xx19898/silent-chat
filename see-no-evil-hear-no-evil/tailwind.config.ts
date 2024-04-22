@@ -10,6 +10,10 @@ const config = {
 	],
   prefix: "",
   theme: {
+    fontFamily:{
+      'sans': ['Helvetica'],
+      'serif': ['Georgia']
+    },
     container: {
       center: true,
       padding: "2rem",

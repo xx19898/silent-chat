@@ -1,46 +1,46 @@
-import { v4 as uuidv4 } from 'uuid'
-
 'use server'
 
-export interface Todo{
-    id: string,
-    todo: string,
-    done: boolean,
-}
+import { v4 as uuidv4 } from 'uuid'
+import { Todo, getTodos, setTodos} from './todosData'
 
-export let todos: Todo[] = [{
-    done:false,
-    id: 'xxd',
-    todo: 'learn nextjs14'
-}]
-
-export async function getTodos(){
-    console.log('GET TODOS EXECUTED')
-    return todos
+export async function getCurrentTodos(){
+    console.log('GETTING CURRENT TODOS')
+    const currTodos = await getTodos()
+    console.log({currTodos})
+    return currTodos
 }
 
 export async function addNewTodo(newTodo:Todo){
-    todos.push(newTodo)
+    const currTodos = await getTodos()
+    currTodos.push(newTodo)
+    setTodos(currTodos)
 }
 
 export async function updateTodo(todoToUpdate:Todo){
     if(!todoToUpdate.id) console.log('Id of the todo to update is in incorrect form')
+    
+    const currTodos = await getTodos()
 
-    todos = todos.map((todo) => {
+    await setTodos(currTodos.map((todo) => {
         if(todo.id != todoToUpdate.id) return todo
 
-        return {...todo,...todoToUpdate}
-    })
+        return {
+            ...todo,
+            ...todoToUpdate
+        }
+    }))
 }
 
 export async function deleteTodo(todoToDelete: Todo){
-    if(!todoToDelete.id) console.log('Id of the todo to update is in incorrect form')
+    const currTodos = await getTodos()
 
-    todos = todos.filter((todo) => todo.id != todoToDelete.id)
+    if(!todoToDelete.id) console.log('Id of the todo to update is in incorrect form')
+    
+    await setTodos(currTodos.filter((todo) => todo.id != todoToDelete.id))
 }
 
-async function createTodo(todo:string){
-
+export async function createTodo(todo:string){
+    const currTodos = await getTodos()
     const newId = uuidv4()
 
     const newTodo:Todo = {
@@ -48,4 +48,8 @@ async function createTodo(todo:string){
         id:newId,
         todo:todo
     }
+
+    await setTodos([...currTodos,newTodo])
+
+    const updatedTodos = await getTodos()
 }

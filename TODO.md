@@ -1,3 +1,2 @@
-1. Figure out the new server actions, changing data on server with mutation
-    1. Create a simple todo app - maybe in codepen or something like that
-2. Read on websocket protocol in general and server.io in particular, create a test app with websocket
+1. Create a simple chat app, where user has to choose his name first, after which he can search after users to chat with
+    1. Create a mock db, which can add and delete users
