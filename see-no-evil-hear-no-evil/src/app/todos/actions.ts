@@ -18,7 +18,7 @@ export async function addNewTodo(newTodo:Todo){
 
 export async function updateTodo(todoToUpdate:Todo){
     if(!todoToUpdate.id) console.log('Id of the todo to update is in incorrect form')
-    
+
     const currTodos = await getTodos()
 
     await setTodos(currTodos.map((todo) => {
@@ -35,7 +35,7 @@ export async function deleteTodo(todoToDelete: Todo){
     const currTodos = await getTodos()
 
     if(!todoToDelete.id) console.log('Id of the todo to update is in incorrect form')
-    
+
     await setTodos(currTodos.filter((todo) => todo.id != todoToDelete.id))
 }
 

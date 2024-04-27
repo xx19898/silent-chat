@@ -1,40 +1,18 @@
 'use client'
 
-import { useEffect,useState } from "react"
-import {socket} from './socket' 
+import useChat from "./useChat"
 
 export default function Chat(){
-    const [isConnected,setIsConnected] = useState(false)
-    const [transport,setTransport] = useState('N/A')
-
-    useEffect(() => {
-        if(socket.connected){
-            onConnect()
-        }
-
-        function onConnect(){
-            setIsConnected(true)
-            setTransport(socket.io.engine.transport.name)
-        }
-
-        function onDisconnect(){
-            setIsConnected(false)
-            setTransport("N/A")
-        }
-
-        socket.on('connect',onConnect)
-        socket.on('disconnect',onDisconnect)
-
-        return () => {
-            socket.off('connect',onConnect)
-            socket.off('disconnect', onDisconnect)
-        }
-    }, [])
+    const {
+        isConnected,
+        setIsConnected,
+        transport,
+        setTransport
+    } = useChat()
 
     return(
-        <div>
-            <p>Status: {isConnected? 'connected' : 'disconnected'}</p>
-            <p>Transport: {transport}</p>
+        <div className="min-h-screen w-auto flex flex-col justify-center items-center">
+
         </div>
     )
 }

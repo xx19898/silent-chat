@@ -1,0 +1,33 @@
+version: '3.8'
+services:
+    postgres-dev:
+        image: postgres
+        restart: unless-stopped
+        env_file: ./dev.env
+        environment:
+            - POSTGRES_USER = $POSTGRESDB_USER
+            - POSTGRES_PASSWORD=$POSTGRESDB_ROOT_PASSWORD
+            - POSTGRES_DB=$POSTGRESDB_DATABASE
+    postgres-test:
+        image: postgres
+        restart: unless-stopped
+        env_file: ./dev.env
+        environment:
+            - POSTGRES_USER=$POSTGRESDB_USER
+            - POSTGRES_PASSWORD=$POSTGRESDB_ROOT_PASSWORD
+            - POSTGRES_DB=$POSTGRESDB_DATABASE
+            - PGPORT=5433
+    chatApp:
+        depends_on:
+            - postgres-dev
+            - postgres-test
+        image: chat-app-dev
+        build:
+            context: ./
+            dockerfile: dev.Dockerfile
+        volumes:
+            - ./:/app
+            - /app/node_modules
+            - /app/.next
+        ports:
+            - '3000:3000'

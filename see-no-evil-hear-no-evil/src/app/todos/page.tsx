@@ -1,10 +1,7 @@
-import { Card, CardContent, CardDescription } from "@/components/ui/card";
-import { getTodos } from "./todosData";
 import { TodoForm } from "./addTodoForm";
 import { HydrationBoundary, QueryClient, dehydrate } from "@tanstack/react-query";
 import TodosList from "./todosList";
 import { getCurrentTodos } from "./actions";
-
 
 export default async function Todos(){
     const queryClient = new QueryClient()
@@ -12,8 +9,9 @@ export default async function Todos(){
       queryKey: ['todos'],
       queryFn: getCurrentTodos,
     })
-  
-    
+
+
+
     return(
         <HydrationBoundary state={dehydrate(queryClient)}>
         <div className="flex min-h-screen flex-col items-center justify-between p-24 bg-slate-100">

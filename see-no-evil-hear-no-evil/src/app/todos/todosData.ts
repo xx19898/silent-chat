@@ -1,5 +1,3 @@
-
-
 export interface Todo{
     id: string,
     todo: string,
@@ -12,7 +10,7 @@ let todos: Todo[] = [{
     todo: 'learn nextjs14'
 }]
 
-function mockWait(){
+export function mockWait(){
     return new Promise<void>((resolve) => {
         setTimeout(() => {
             resolve()

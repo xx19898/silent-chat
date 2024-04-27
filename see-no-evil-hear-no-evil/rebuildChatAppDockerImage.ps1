@@ -1,0 +1,1 @@
+docker build -f ./dev.Dockerfile -t chat-app-dev --no-cache

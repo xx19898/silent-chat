@@ -5,15 +5,13 @@ import { getTodos } from "./todosData"
 import { Card, CardContent } from "@/components/ui/card"
 import { getCurrentTodos } from "./actions"
 
-export default () => {
+export default function TodosList(){
     const {data,isLoading} = useQuery({
         queryKey: ['todos'],
-        queryFn: async function(){
-            console.log('getting todos functions gets ran')
+        queryFn: async () => {
+            const currentTodos = await getCurrentTodos()
 
-            const todos = await getCurrentTodos()
-            console.log({todos})
-            return todos
+            return currentTodos
         }
     })
 
@@ -21,7 +19,7 @@ export default () => {
 
     if(isLoading || !data) return <h1>Please wait</h1>
 
-    return data.map((todo) => 
+    return data.map((todo) =>
         <Card key={todo.id}>
             <CardContent>
                 <p className="">{todo.todo}</p>
