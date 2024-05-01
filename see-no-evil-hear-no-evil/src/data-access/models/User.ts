@@ -1,8 +1,13 @@
+import { Messages } from '@/utility/sequelize'
 import { DataTypes } from 'sequelize'
+import { MessageAttributes } from './Message'
 
 export interface UserAttributes {
+    id: string
     username: string
     password: string
+    receiver: MessageAttributes[]
+    sender: MessageAttributes[]
 }
 
 export const User = {

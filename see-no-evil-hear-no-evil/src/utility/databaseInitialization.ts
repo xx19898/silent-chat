@@ -4,31 +4,29 @@ import User, { UserAttributes } from '@/data-access/models/User'
 import { ModelDefined, Sequelize } from 'sequelize'
 
 export function defineModels(sequelize: Sequelize) {
-    const Users: ModelDefined<UserAttributes, {}> = sequelize.define(
-        'Users',
-        User
-    )
-    const Channels: ModelDefined<ChannelAttributes, {}> = sequelize.define(
-        'Channels',
-        Channel
-    )
-    const Messages: ModelDefined<MessageAttributes, MessageAttributes> =
-        sequelize.define('Messages', Message)
+    const Users: ModelDefined<UserAttributes, {}> = sequelize.define('User', User)
+    const Channels: ModelDefined<ChannelAttributes, {}> = sequelize.define('Channel', Channel)
+    const Messages: ModelDefined<MessageAttributes, MessageAttributes> = sequelize.define('Message', Message)
 
     Users.belongsToMany(Channels, { through: 'UserChannels', as: 'channels' })
     Channels.belongsToMany(Users, { through: 'UserChannels', as: 'users' })
 
-    Messages.hasOne(Users, { as: 'sender', foreignKey: 'senderUsername' })
-    Messages.hasOne(Users, { as: 'receiver', foreignKey: 'receiverUsername' })
-
+    Users.hasMany(Messages, { as: 'sender', foreignKey: 'senderUsername' })
+    Users.hasMany(Messages, { as: 'receiver', foreignKey: 'receiverUsername' })
+    Messages.belongsTo(Users, { as: 'sender', foreignKey: 'senderUsername' })
+    Messages.belongsTo(Users, {
+        as: 'receiver',
+        foreignKey: 'receiverUsername',
+    })
+    /*
     Channels.hasMany(Messages, {
         foreignKey: 'id',
         onDelete: 'CASCADE',
         onUpdate: 'CASCADE',
-        as: 'messages',
+        as: 'message',
     })
     Messages.belongsTo(Channels, { as: 'channel' })
-
+    */
     return { Channels, Messages, Users }
 }
 

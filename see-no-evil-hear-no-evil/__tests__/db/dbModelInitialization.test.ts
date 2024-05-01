@@ -30,7 +30,6 @@ describe('Defining and initializing models', () => {
 
     test('making sure all the needed models exist on the database', async () => {
         const { Channels, Messages, Users } = defineModels(sequelize)
-        await sequelize.sync()
 
         const describeUsers = await Users.describe()
         const describeChannels = await Channels.describe()
