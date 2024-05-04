@@ -6,9 +6,12 @@
         "dev": "nodemon --legacy-watch server.mjs",
         "build": "next build",
         "test": "vitest",
+        "select:test": "vitest usersDataAccess",
         "start": "next start",
         "lint": "next lint",
-        "prettier-watch": "onchange \"**/*.{js,jsx,ts,tsx,css,md,json}\" -- prettier --write {{changed}}"
+        "prettier-watch": "onchange \"**/*.{js,jsx,ts,tsx,css,md,json}\" -- prettier --write {{changed}}",
+        "storybook": "storybook dev -p 6006",
+        "build-storybook": "storybook build"
     },
     "dependencies": {
         "@hookform/resolvers": "^3.3.4",
@@ -37,6 +40,15 @@
         "zod": "^3.22.5"
     },
     "devDependencies": {
+        "@storybook/addon-essentials": "^7.6.10",
+        "@storybook/addon-interactions": "^7.6.10",
+        "@storybook/addon-links": "^7.6.10",
+        "@storybook/addon-onboarding": "^1.0.11",
+        "@storybook/addon-styling-webpack": "^1.0.0",
+        "@storybook/blocks": "^7.6.10",
+        "@storybook/nextjs": "^7.6.10",
+        "@storybook/react": "^7.6.10",
+        "@storybook/test": "^7.6.10",
         "@types/node": "^20",
         "@types/react": "^18",
         "@types/react-dom": "^18",
@@ -46,6 +58,7 @@
         "nodemon": "^3.1.0",
         "postcss": "^8",
         "prettier": "3.2.5",
+        "storybook": "^7.6.10",
         "tailwindcss": "^3.4.1",
         "typescript": "^5",
         "vitest": "^1.5.2"

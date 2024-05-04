@@ -64,7 +64,10 @@ export interface UsersDAO {
     >
 }
 
-export function getUserDAO(Users: ModelDefined<UserAttributes, {}>, Messages: ModelDefined<MessageAttributes, {}>): UsersDAO {
+export function getUserDAO(
+    Users: ModelDefined<UserAttributes, {}>,
+    Messages: ModelDefined<MessageAttributes, {}>
+): UsersDAO {
     const usersDAO: UsersDAO = {
         createNewUser: async function ({ username, password }: { username: string; password: string }) {
             const newId = uuidv4()
@@ -153,11 +156,7 @@ export function getUserDAO(Users: ModelDefined<UserAttributes, {}>, Messages: Mo
                     },
                     include: [
                         {
-                            as: 'sender',
-                            model: Messages,
-                        },
-                        {
-                            as: 'receiver',
+                            as: 'author',
                             model: Messages,
                         },
                     ],

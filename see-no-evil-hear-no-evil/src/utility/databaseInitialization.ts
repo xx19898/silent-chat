@@ -11,22 +11,17 @@ export function defineModels(sequelize: Sequelize) {
     Users.belongsToMany(Channels, { through: 'UserChannels', as: 'channels' })
     Channels.belongsToMany(Users, { through: 'UserChannels', as: 'users' })
 
-    Users.hasMany(Messages, { as: 'sender', foreignKey: 'senderUsername' })
-    Users.hasMany(Messages, { as: 'receiver', foreignKey: 'receiverUsername' })
-    Messages.belongsTo(Users, { as: 'sender', foreignKey: 'senderUsername' })
-    Messages.belongsTo(Users, {
-        as: 'receiver',
-        foreignKey: 'receiverUsername',
-    })
-    /*
+    Users.hasMany(Messages, { as: 'author', foreignKey: 'authorUsername' })
+    Messages.belongsTo(Users, { as: 'author', foreignKey: 'authorUsername' })
+
     Channels.hasMany(Messages, {
-        foreignKey: 'id',
+        foreignKey: 'channelId',
         onDelete: 'CASCADE',
         onUpdate: 'CASCADE',
         as: 'message',
     })
-    Messages.belongsTo(Channels, { as: 'channel' })
-    */
+    Messages.belongsTo(Channels, { as: 'channel', foreignKey: 'channelId' })
+
     return { Channels, Messages, Users }
 }
 

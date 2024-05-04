@@ -6,8 +6,7 @@ export interface UserAttributes {
     id: string
     username: string
     password: string
-    receiver: MessageAttributes[]
-    sender: MessageAttributes[]
+    author: MessageAttributes[]
 }
 
 export const User = {
