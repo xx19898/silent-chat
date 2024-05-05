@@ -31,10 +31,11 @@ describe.sequential('Testing message CRUD functions', () => {
             await createNewUser({ password: 'testPassword', username: 'username1' })
             await createNewUser({ password: 'testPassword', username: 'username2' })
 
+            //TODO: fix after the channels tests
             const { message, error } = await createNewMessage({
                 content: 'test content',
-                receiverUsername: 'username1',
-                senderUsername: 'username2',
+                authorUsername: 'username1',
+                channelId: '',
             })
             console.log({ error })
             expect(error).toBeUndefined()

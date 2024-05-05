@@ -6,7 +6,7 @@
         "dev": "nodemon --legacy-watch server.mjs",
         "build": "next build",
         "test": "vitest",
-        "select:test": "vitest usersDataAccess",
+        "select:test": "vitest channelsDataAccess",
         "start": "next start",
         "lint": "next lint",
         "prettier-watch": "onchange \"**/*.{js,jsx,ts,tsx,css,md,json}\" -- prettier --write {{changed}}",

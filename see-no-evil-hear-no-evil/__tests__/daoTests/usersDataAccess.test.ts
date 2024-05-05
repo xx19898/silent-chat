@@ -6,7 +6,7 @@ import { deleteAllRowsOnAllTables } from '../databaseTestUtility'
 import { defineModels } from '@/utility/databaseInitialization'
 import { getUserDAO } from '@/data-access/chatUsers'
 
-describe.sequential('Testing user CRUD functions', () => {
+describe('Testing user CRUD functions', () => {
     loadEnvVariables('./dev.env')
     const connectionString = `postgres://${process.env.POSTGRESDB_USER}:${process.env.POSTGRESDB_ROOT_PASSWORD}@${'postgres-test'}:${5433}/${process.env.POSTGRESDB_DATABASE}`
     const sequelize = new Sequelize(connectionString)

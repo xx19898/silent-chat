@@ -4,8 +4,8 @@ import { User } from '../chatUsers'
 export interface MessageAttributes {
     id: string
     content: string
-    senderUsername: string
-    receiverUsername: string
+    authorUsername: string
+    channelId: string
 }
 
 const Message = {
