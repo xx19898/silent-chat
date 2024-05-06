@@ -3,7 +3,7 @@ import { expect, test, describe } from 'vitest'
 
 describe('Environment variables load', () => {
     test('loading environment variables', () => {
-        loadEnvVariables('./dev.env')
+        loadEnvVariables('./test.env')
         const dbUser = process.env.POSTGRESDB_USER
         expect(dbUser).toBe('database_user')
     })

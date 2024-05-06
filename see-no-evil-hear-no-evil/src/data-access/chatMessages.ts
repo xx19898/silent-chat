@@ -47,6 +47,7 @@ export function getMessagesDAO(
                     id: newMessageId,
                     author: authorUsername,
                     content: content,
+                    channelId: channelId,
                 })
                 return {
                     error: undefined,

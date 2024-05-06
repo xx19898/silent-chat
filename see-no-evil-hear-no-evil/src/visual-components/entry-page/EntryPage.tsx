@@ -1,5 +1,6 @@
 'use client'
 import { Button } from '@/components/ui/button'
+import Link from 'next/link'
 
 const EntryPage = () => {
     return (
@@ -13,7 +14,9 @@ const EntryPage = () => {
                     <Button className='w-[10em] py-5 text-white font-semibold rounded-md'>Login</Button>
                     <Button className='w-[10em] py-5 font-semibold rounded-md'>Register</Button>
                 </section>
-                <Button className='px-10 py-5 bg-slate-500 font-semibold rounded-lg'>Stay anonymous</Button>
+                <Link href={'/chat/channels'}>
+                    <Button className='px-10 py-5 bg-slate-500 font-semibold rounded-lg'>Stay anonymous</Button>
+                </Link>
             </section>
         </div>
     )

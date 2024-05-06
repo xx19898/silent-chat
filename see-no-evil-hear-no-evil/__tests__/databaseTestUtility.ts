@@ -16,7 +16,7 @@ export async function deleteAllRowsOnAllTables(sequelize: Sequelize) {
 }
 
 export function setupDBAccessObject() {
-    loadEnvVariables('./dev.env')
+    loadEnvVariables('./test.env')
     const connectionString = `postgres://${process.env.POSTGRESDB_USER}:${process.env.POSTGRESDB_ROOT_PASSWORD}@${'postgres-test'}:${5433}/${process.env.POSTGRESDB_DATABASE}`
     const sequelize = new Sequelize(connectionString)
     return sequelize

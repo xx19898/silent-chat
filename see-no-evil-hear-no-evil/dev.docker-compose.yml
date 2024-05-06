@@ -5,13 +5,13 @@ services:
         restart: unless-stopped
         env_file: ./dev.env
         environment:
-            - POSTGRES_USER = $POSTGRESDB_USER
+            - POSTGRES_USER=$POSTGRESDB_USER
             - POSTGRES_PASSWORD=$POSTGRESDB_ROOT_PASSWORD
             - POSTGRES_DB=$POSTGRESDB_DATABASE
     postgres-test:
         image: postgres
         restart: unless-stopped
-        env_file: ./dev.env
+        env_file: ./test.env
         environment:
             - POSTGRES_USER=$POSTGRESDB_USER
             - POSTGRES_PASSWORD=$POSTGRESDB_ROOT_PASSWORD

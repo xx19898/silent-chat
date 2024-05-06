@@ -30,7 +30,7 @@ export async function createApp(httpServer: ReturnType<typeof createServer>, con
         cors: { origin: '*' },
     })
 
-    const { Channels, Messages, Users } = defineModels(sequelize)
+    const { Channels, Messages, Users, UsersChannels } = defineModels(sequelize)
     const usersDAO = getUserDAO(Users, Messages)
     //InitAuth(args) should be here
     initEventHandlers({ ioServer: ioServer, usersDAO: usersDAO })
