@@ -1,5 +1,5 @@
 import { afterAll, beforeAll, describe, expect, it, test } from 'vitest'
-import { setupSocketTest, waitFor } from './util'
+import { setupSocketTest, waitFor } from '../util'
 import { Socket } from 'socket.io-client'
 
 describe('getting list of the users', async () => {

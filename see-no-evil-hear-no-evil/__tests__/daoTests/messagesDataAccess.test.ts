@@ -40,7 +40,7 @@ describe.sequential('Testing message CRUD functions', () => {
             console.log({ error })
             expect(error).toBeUndefined()
             expect(message).toBeDefined()
-            const { content, id, receiver, sender } = message!
+            const { content } = message!
             expect(content).toBe('test content')
         })
 })

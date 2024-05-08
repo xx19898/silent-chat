@@ -48,7 +48,13 @@ export async function setupSocketTest() {
     const { createNewUser } = getUserDAO(Users, Messages)
     await createNewUser({ password: 'testPassword', username: 'First User' })
 
-    const { close: closeIoServer } = await createApp(httpServer, config, sequelize)
+    const {
+        close: closeIoServer,
+        channelsDAO,
+        disconnectDB,
+        messagesDAO,
+        usersDAO,
+    } = await createApp(httpServer, config, sequelize)
 
     const firstUserSocket = ioc(`http://localhost:${config.port}`)
 
@@ -61,5 +67,8 @@ export async function setupSocketTest() {
     return {
         closeIoServer,
         firstUserSocket,
+        channelsDAO,
+        usersDAO,
+        messagesDAO,
     }
 }

@@ -1,4 +1,4 @@
-import { UsersDAO } from '@/data-access/chatUsers'
+import { User, UsersDAO } from '@/data-access/chatUsers'
 import { Socket } from 'socket.io'
 
 interface IListUsers {
@@ -6,8 +6,11 @@ interface IListUsers {
     usersDAO: UsersDAO
 }
 function listUsers({ socket, usersDAO }: IListUsers) {
-    return async (query, callback) => {
+    return async (callback: ({ status, users }: { status: string; users: User[] | undefined }) => void) => {
         const { users, error } = await usersDAO.getUsers()
+
+        if (!users) callback({ status: 'NOT OK', users: undefined })
+
         callback({
             status: 'OK',
             users,

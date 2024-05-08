@@ -12,7 +12,7 @@ const ChannelLink = ({ name, participants }: IChannelLink) => {
             key={name}
             className='w-full my-3'>
             <Link
-                href={`/chat-${name}`}
+                href={`/chat/channels/${name}`}
                 className='w-full'>
                 <div className='w-full shadow-md  px-[10%] rounded-md py-2 flex flex-row justify-between items-center'>
                     <p className='text-lg font-medium'>{name}</p>

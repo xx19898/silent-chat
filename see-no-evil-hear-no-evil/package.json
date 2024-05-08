@@ -7,7 +7,7 @@
         "dev": "tsx watch server.ts",
         "build": "next build",
         "test": "vitest",
-        "select:test": "vitest channelsDataAccess",
+        "select:test": "vitest creatingChannel",
         "start": "next start",
         "lint": "next lint",
         "prettier-watch": "onchange \"**/*.{js,jsx,ts,tsx,css,md,json}\" -- prettier --write {{changed}}",

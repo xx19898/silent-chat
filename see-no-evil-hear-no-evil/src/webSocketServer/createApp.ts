@@ -6,6 +6,8 @@ import { Sequelize } from 'sequelize'
 import { defineModels } from '@/utility/databaseInitialization'
 import { getUserDAO } from '@/data-access/chatUsers'
 import initEventHandlers from './initEventHandlers'
+import { getMessagesDAO } from '@/data-access/chatMessages'
+import { getChannelsDAO } from '@/data-access/chatChannels'
 
 export interface IConfig {
     cors: {
@@ -32,8 +34,10 @@ export async function createApp(httpServer: ReturnType<typeof createServer>, con
 
     const { Channels, Messages, Users, UsersChannels } = defineModels(sequelize)
     const usersDAO = getUserDAO(Users, Messages)
+    const messagesDAO = getMessagesDAO(Messages, Users)
+    const channelsDAO = getChannelsDAO(Channels, Messages, Users, UsersChannels)
     //InitAuth(args) should be here
-    initEventHandlers({ ioServer: ioServer, usersDAO: usersDAO })
+    initEventHandlers({ ioServer: ioServer, usersDAO: usersDAO, messagesDAO: messagesDAO, channelsDAO: channelsDAO })
 
     return {
         async close() {
@@ -42,5 +46,8 @@ export async function createApp(httpServer: ReturnType<typeof createServer>, con
         async disconnectDB() {
             sequelize.close()
         },
+        usersDAO,
+        messagesDAO,
+        channelsDAO,
     }
 }

@@ -6,5 +6,5 @@ export function getAnonymousUsers() {
 }
 
 export function addNewUser(newUser: string) {
-    anonymousUsers = [...anonymousUsers]
+    anonymousUsers = [...anonymousUsers, newUser]
 }

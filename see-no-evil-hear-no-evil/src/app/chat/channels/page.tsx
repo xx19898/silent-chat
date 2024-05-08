@@ -7,12 +7,8 @@ import PublicChannelChoosingPage, {
 const props: IPublicChannelChoosingPage = {
     channels: [
         {
-            name: 'First channel',
-            participants: 10,
-        },
-        {
-            name: 'Second Channel',
-            participants: 20,
+            name: 'public-channel',
+            participants: 0,
         },
     ],
 }

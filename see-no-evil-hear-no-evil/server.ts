@@ -47,10 +47,31 @@ app.prepare().then(async () => {
     })
 
     io.on('connection', (socket) => {
-        console.log('CONNECTED ON SERVER SIDE')
-    })
+        socket.onAny(() => {
+            console.log('got approached')
+        })
+        socket.on('public-channel:join', async (payload, callback) => {
+            console.log('JOINING')
+            socket.join('public-channel')
 
-    //create initeventhandlers function which passes in io to eventhandlers and initialises them
+            if (typeof callback !== 'function') return
+
+            return callback({
+                status: 'OK',
+            })
+        })
+
+        socket.on('public-channel:message-sent', async (payload, callback) => {
+            console.log({ payload: payload })
+            const author = payload.author
+            const content = payload.content
+            socket.broadcast
+                .to('public-channel')
+                .emit('public-channel:new-message', { messsage: content, author: author })
+
+            callback({ status: 'OK', data: { author, content } })
+        })
+    })
 
     httpServer
         .once('error', (err) => {
