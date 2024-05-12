@@ -5,7 +5,7 @@ import { Sequelize } from 'sequelize'
 import { describe, expect, test } from 'vitest'
 import { deleteAllRowsOnAllTables } from './databaseTestUtility'
 
-describe('Testing message CRUD functions', () => {
+describe('Testing database utility functions', () => {
     loadEnvVariables('./test.env')
     const connectionString = `postgres://${process.env.POSTGRESDB_USER}:${process.env.POSTGRESDB_ROOT_PASSWORD}@${'postgres-test'}:${5433}/${process.env.POSTGRESDB_DATABASE}`
     const sequelize = new Sequelize(connectionString)

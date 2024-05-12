@@ -5,6 +5,7 @@ import { defineModels } from '@/utility/databaseInitialization.js'
 import { getUserDAO } from '@/data-access/chatUsers.js'
 import { io as ioc, type Socket as ClientSocket } from 'socket.io-client'
 import { Server, type Socket as ServerSocket } from 'socket.io'
+import { connectToDb } from '@/utility/databaseConnection.js'
 
 /*
 function listen(httpServer, ...args) {
@@ -45,8 +46,11 @@ export async function setupSocketTest() {
     })
 
     const { Users, Messages } = defineModels(sequelize)
+    await connectToDb(sequelize,'test')
+    sequelize.sync()
+    const mockUser = { password: 'testPassword', username: 'First User' }  
     const { createNewUser } = getUserDAO(Users, Messages)
-    await createNewUser({ password: 'testPassword', username: 'First User' })
+    await createNewUser(mockUser)
 
     const {
         close: closeIoServer,
@@ -57,12 +61,19 @@ export async function setupSocketTest() {
     } = await createApp(httpServer, config, sequelize)
 
     const firstUserSocket = ioc(`http://localhost:${config.port}`)
+    const secondUserSocket = ioc(`http://localhost:${config.port}`)
 
     firstUserSocket.on('connect', () => {
         console.log('FIRST USER CONNECTED TO THE SERVER')
     })
+    
+    secondUserSocket.on('connect', () => {
+        console.log('SECOND USER CONNECTED TO THE SERVER')
+    })
 
     await waitFor(firstUserSocket, 'connect')
+    await waitFor(secondUserSocket,'connect')
+    console.log('GOT HERE')
 
     return {
         closeIoServer,
@@ -70,5 +81,8 @@ export async function setupSocketTest() {
         channelsDAO,
         usersDAO,
         messagesDAO,
+        sequelize,
+        mockUser,
+        secondUserSocket
     }
 }

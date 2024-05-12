@@ -8,11 +8,12 @@ export async function dropAllTablesInTheDatabase(sequelize: Sequelize) {
 
 export async function deleteAllRowsOnAllTables(sequelize: Sequelize) {
     console.log('DELETING ALL ROWS ON ALL TABLES')
-    const { Channels, Messages, Users } = defineModels(sequelize)
-
+    const { Channels, Messages, Users,UsersChannels } = defineModels(sequelize)
+    sequelize.sync()
     await Messages.destroy({ where: {}, cascade: true })
     await Channels.destroy({ where: {}, cascade: true })
     await Users.destroy({ where: {}, cascade: true })
+    await UsersChannels.destroy({where:{},cascade:true})
 }
 
 export function setupDBAccessObject() {

@@ -1,6 +1,5 @@
 import { v4 as uuidv4 } from 'uuid'
 import { Message } from './chatMessages'
-import { Users } from '@/utility/sequelize'
 import { Model, ModelDefined } from 'sequelize'
 import { UserAttributes } from './models/User'
 import { MessageAttributes } from './models/Message'

@@ -54,7 +54,7 @@ export function getMessagesDAO(
                     message: {
                         content: dataValues.content,
                         id: dataValues.id,
-                        author: dataValues.authorUsername,
+                        author: authorUsername,
                         channelId: dataValues.channelId,
                     },
                 }

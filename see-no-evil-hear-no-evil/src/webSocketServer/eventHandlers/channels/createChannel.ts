@@ -10,7 +10,7 @@ const createChannelPayload = z.object({
 
 export type CreateChannelPayload = z.infer<typeof createChannelPayload>
 
-interface ICreateChannel {
+interface ICreateChannel{
     socket: Socket
     channelsDAO: ChannelsDAO
 }
@@ -20,10 +20,9 @@ function createChannel({ channelsDAO }: ICreateChannel) {
         payload: z.infer<typeof createChannelPayload>,
         callback: ({ status }: { status: string }) => void
     ) => {
-        const { channel, error } = await channelsDAO.createNewChannel({ name: 'xd' })
-
-        if (error || !channel) return
-
+        const { channel, error } = await channelsDAO.createNewChannel({ name: payload.name })
+        console.log({channel,error})
+        if (error || !channel) callback({status: 'Error'})
         try {
             const { name: channelName } = createChannelPayload.parse(payload)
             callback({ status: 'OK' })

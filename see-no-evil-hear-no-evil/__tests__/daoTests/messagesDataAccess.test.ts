@@ -18,7 +18,6 @@ describe.sequential('Testing message CRUD functions', () => {
     })
     afterAll(async () => {
         await deleteAllRowsOnAllTables(sequelize)
-        await sequelize.close()
     })
     afterEach(async () => {
         await deleteAllRowsOnAllTables(sequelize)
@@ -30,6 +29,11 @@ describe.sequential('Testing message CRUD functions', () => {
 
             await createNewUser({ password: 'testPassword', username: 'username1' })
             await createNewUser({ password: 'testPassword', username: 'username2' })
+
+            const firstUserExists = await userExists({username:'username1'})
+            const secondUserExists = await userExists({username:'username2'})
+            console.log({firstUserExists})
+            console.log({secondUserExists})
 
             //TODO: fix after the channels tests
             const { message, error } = await createNewMessage({

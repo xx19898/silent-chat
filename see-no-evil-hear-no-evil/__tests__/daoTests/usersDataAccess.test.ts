@@ -19,7 +19,6 @@ describe('Testing user CRUD functions', () => {
     })
     afterAll(async () => {
         await deleteAllRowsOnAllTables(sequelize)
-        await sequelize.close()
     })
     afterEach(async () => {
         await deleteAllRowsOnAllTables(sequelize)

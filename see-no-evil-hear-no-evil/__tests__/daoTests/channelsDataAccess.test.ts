@@ -6,6 +6,7 @@ import { getChannelsDAO } from '@/data-access/chatChannels'
 import { getUserDAO } from '@/data-access/chatUsers'
 import { getMessagesDAO } from '@/data-access/chatMessages'
 import { UsersChannel } from '@/data-access/models/UserChannels'
+import { QueryTypes } from 'sequelize'
 
 describe('Testing channel CRUD functions', () => {
     const sequelize = setupDBAccessObject()
@@ -33,7 +34,7 @@ describe('Testing channel CRUD functions', () => {
 
     test('testing channelsDAO create new message function', async () => {
         const { Channels, Messages, Users, UsersChannels } = defineModels(sequelize)
-        const { createNewChannel } = getChannelsDAO(Channels, Messages, Users, UsersChannels)
+        const { createNewChannel } = getChannelsDAO(Channels, Messages, Users, UsersChannels,sequelize)
         await createNewChannel({ name: 'firstChannel' })
         const createdChannel = await Channels.findOne({ where: { name: 'firstChannel' } })
         expect(createdChannel).toBeDefined()
@@ -41,8 +42,10 @@ describe('Testing channel CRUD functions', () => {
 
     test('testing channelsDAO get channel by name', async () => {
         const { Channels, Messages, Users, UsersChannels } = defineModels(sequelize)
-        const { createNewChannel, getChannelByName } = getChannelsDAO(Channels, Messages, Users, UsersChannels)
+        const { createNewChannel, getChannelByName } = getChannelsDAO(
+            Channels, Messages, Users, UsersChannels,sequelize)
         await createNewChannel({ name: 'firstChannel' })
+        
         const createdChannel = await getChannelByName({
             name: 'firstChannel',
             messagesIncluded: false,
@@ -59,7 +62,7 @@ describe('Testing channel CRUD functions', () => {
             Channels,
             Messages,
             Users,
-            UsersChannels
+            UsersChannels,sequelize
         )
         const { createNewUser } = getUserDAO(Users, Messages)
         const { createNewMessage } = getMessagesDAO(Messages, Users)
@@ -70,7 +73,6 @@ describe('Testing channel CRUD functions', () => {
             messagesIncluded: false,
             usersIncluded: false,
         })
-        console.log({ createdChannel })
         const createdChannelId = createdChannel.channel?.id!
         await createNewUser({ password: 'testPassword', username: 'testUsername1' })
         await createNewUser({ password: 'testPassword', username: 'testUsername2' })
@@ -91,13 +93,50 @@ describe('Testing channel CRUD functions', () => {
 
         const result = await getChannelByName({ usersIncluded: true, name: 'firstChannel', messagesIncluded: true })
 
-        console.log({ result })
-
         expect(result).toBeDefined()
         expect(result.channel!.users!.length).toBe(2)
         expect(result.channel!.messages!.length).toBe(2)
     })
-    /*
-    test('get list of users belonging to the channel')
-*/
+    
+    test('get list of channels with number of users that are on them', async () => {
+        const { UsersChannels, Channels, Messages, Users } = defineModels(sequelize)
+        const { createNewChannel, getChannelByName, addUserToChannel,getChannelsWithUserCount } = getChannelsDAO(
+            Channels,
+            Messages,
+            Users,
+            UsersChannels,sequelize
+        )
+        
+        const { createNewUser } = getUserDAO(Users, Messages)
+        
+        await createNewUser({ password: 'testPassword', username: 'testUsername1' })
+        await createNewUser({ password: 'testPassword', username: 'testUsername2' })
+
+        await createNewChannel({ name: 'firstChannel' })
+        await createNewChannel({name: 'secondChannel'})
+        await createNewChannel({name: 'thirdChannel'})
+
+        const createdChannel = await getChannelByName({
+            name: 'firstChannel',
+            messagesIncluded: false,
+            usersIncluded: false,
+        })
+        const secondCreatedChannel = await getChannelByName({
+            name: 'secondChannel',
+            messagesIncluded: false,
+            usersIncluded: false
+        })
+        
+        const createdChannelId = createdChannel.channel?.id!
+        const secondCreatedChannelId = secondCreatedChannel.channel?.id!
+
+        await addUserToChannel({ channelId: createdChannelId!, username: 'testUsername1' })
+        await addUserToChannel({ channelId: createdChannelId!, username: 'testUsername2' })
+        await addUserToChannel({channelId: secondCreatedChannelId,username: 'testUsername1'})
+        
+        const result = await getChannelsWithUserCount()
+        expect(result).toBeDefined()
+        expect(result.channels).toBeDefined()
+        expect(result.channels!.length).toBe(3)
+    })
 })
