@@ -39,7 +39,7 @@ describe.sequential('testing channel socket endpoints', async () => {
     afterAll(async () => {
         closeSocketServer()
     })
-/*
+
     it('client can create a channel', async () => {
         const createChannelRequestPayload: CreateChannelPayload = { name: 'General Channel' }
         const response = await userSocket.emitWithAck('channels:create', createChannelRequestPayload)
@@ -91,6 +91,7 @@ describe.sequential('testing channel socket endpoints', async () => {
         const sentMessage = await userSocket.emitWithAck('messages:send',sendMessagePayload)
         expect(sentMessage.status).toBe('OK')
     })
+    
     it('client can join a channel', async () => {
         const createChannelRequestPayload: CreateChannelPayload = { name: 'General Channel' }
         const channelCreationResponse = await userSocket.emitWithAck('channels:create', createChannelRequestPayload)
@@ -115,7 +116,7 @@ describe.sequential('testing channel socket endpoints', async () => {
         const sentMessage = await userSocket.emitWithAck('channels:join',joinChannelPayload)
         expect(sentMessage.status).toBe('OK')
     })
-*/
+
     it('client receives messages that are broadcasted on the channel',async () => {
         const createChannelRequestPayload: CreateChannelPayload = { name: 'General Channel' }
         const channelCreationResponse = await userSocket.emitWithAck('channels:create', createChannelRequestPayload)

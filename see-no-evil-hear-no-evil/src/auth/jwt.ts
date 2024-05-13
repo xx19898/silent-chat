@@ -1,4 +1,4 @@
-import {sign, verify} from 'jsonwebtoken'
+import jwt from 'jsonwebtoken'
 import { z } from 'zod';
 
 export interface IAuthToken{
@@ -17,7 +17,7 @@ const decodedData = z.object({
 
 export function createAuthToken(username:string,role:string,jwtSecret:string){
     try{
-        const token = sign({
+        const token = jwt.sign({
             exp: Math.floor(Date.now() / 1000) + (60 * 60),
             data: {
                 username:username,
@@ -32,7 +32,7 @@ export function createAuthToken(username:string,role:string,jwtSecret:string){
 
 export function parseAuthToken(token:string,jwtSecret:string){
     try{
-        const data = verify(token,jwtSecret)
+        const data = jwt.verify(token,jwtSecret)
         const parsedData = decodedData.parse(data)
         return {data:parsedData,error:undefined}
     }catch(e){

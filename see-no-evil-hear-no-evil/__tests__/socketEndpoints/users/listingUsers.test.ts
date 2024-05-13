@@ -15,7 +15,7 @@ describe('getting list of the users', async () => {
         closeSocketServer()
     })
     it('number of users gets listed correctly through the socket communication', async () => {
-        let numberOfUsers = 0
+        let numberOfUsers = 0 
         try {
             const response = await userSocket.timeout(15000).emitWithAck('users:list', {})
             numberOfUsers = response.users.length

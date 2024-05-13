@@ -18,9 +18,10 @@ export interface IConfig {
     hostname: string
     port: number
 }
+ 
 
 export async function createNextApp({ serverIsForDevelopment, hostname, port }: IConfig) {
-    const app = next({ dev: serverIsForDevelopment, hostname, port: port })
+    const app = next({ dev: serverIsForDevelopment, hostname, port: port})
     await app.prepare()
     const handler = app.getRequestHandler()
     const httpServer = createServer(handler)

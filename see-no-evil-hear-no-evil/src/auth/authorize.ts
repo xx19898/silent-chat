@@ -7,6 +7,7 @@ interface IVerifyAndParseToken{
     token: string | undefined
     jwtSecret: string
 }
+
 export async function authorize({callback,jwtSecret,token}:IVerifyAndParseToken){
     if(!token) callback({status:'Error',error:'Not authorized'})
     
