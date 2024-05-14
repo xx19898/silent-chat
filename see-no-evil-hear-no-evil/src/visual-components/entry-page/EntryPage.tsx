@@ -1,28 +1,14 @@
 'use client'
-import { useClientSocket } from '@/app/chat/hooks/clientSocket/useClientSocket'
 import { Button } from '@/components/ui/button'
-import { BACKEND_URL } from '@/config'
-import Link from 'next/link'
-import { redirect } from 'next/navigation'
-import { useEffect } from 'react'
-import { io as ioc} from 'socket.io-client'
 
-const EntryPage = () => {
-    const {getClientSocket,setClientSocket} = useClientSocket()
+interface IEntryPage{
+    onAnonymousUserLogin: () => Promise<void>,
+}
 
-    useEffect(() => {
-        setClientSocket(ioc(`${BACKEND_URL}`))
-    },[])
+const EntryPage = ({onAnonymousUserLogin}:IEntryPage) => {
 
-    async function onClickAnonymous(){
-        const socket = getClientSocket()
-        const result = await socket?.emitWithAck('anonymous:start',{})
-        console.log({result})
-        redirect('/chat/channels')
-    }
-    
     return (
-        <div className='w-full min-h-screen h-auto bg-gradient-to-r from-violet-600 to-indigo-600 text-white flex flex-col justify-start items-center gap-[1em]'>
+        <div className='w-full min-h-screen h-auto bg-gradient-to-b from-gray-800 via-gray-800 to-gray-900 text-white flex flex-col justify-start items-center gap-[1em]'>
             <h1 className='text-center mt-[10%] text-5xl font-semibold'>Welcome to the chat</h1>
             <h2 className='text-center text-2xl font-semibold'>
                 Choose whether to stay anonymous or to be authenticated user :)
@@ -32,7 +18,7 @@ const EntryPage = () => {
                     <Button className='w-[10em] py-5 text-white font-semibold rounded-md'>Login</Button>
                     <Button className='w-[10em] py-5 font-semibold rounded-md'>Register</Button>
                 </section>
-                    <Button onClick={onClickAnonymous} className='px-10 py-5 bg-slate-500 font-semibold rounded-lg'>Stay anonymous</Button>
+                    <Button onClick={onAnonymousUserLogin} className='px-10 py-5 bg-slate-500 font-semibold rounded-lg'>Stay anonymous</Button>
             </section>
         </div>
     )

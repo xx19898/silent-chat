@@ -12,6 +12,7 @@ const props: IPublicChannelChoosingPage = {
         },
     ],
 }
-export default async function ChannelsPage() {
+
+export default async function ChannelChoosingContainer() {
     return <PublicChannelChoosingPage channels={props.channels} />
 }
