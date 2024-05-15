@@ -1,18 +1,13 @@
 'use server'
 
-import PublicChannelChoosingPage, {
-    IPublicChannelChoosingPage,
-} from '@/visual-components/channel-choosing-page/ChannelChoosingPage'
+import PublicChannelChoosingPage from '@/visual-components/channel-choosing-page/ChannelChoosingPage'
+import { getChannelsInfo } from '../actions/channelActions'
+import { getUsers, users } from '../usersData'
 
-const props: IPublicChannelChoosingPage = {
-    channels: [
-        {
-            name: 'public-channel',
-            participants: 0,
-        },
-    ],
-}
+
 
 export default async function ChannelChoosingContainer() {
-    return <PublicChannelChoosingPage channels={props.channels} />
+    const channelInfo = await getChannelsInfo()
+
+    return <PublicChannelChoosingPage channels={undefined} />
 }

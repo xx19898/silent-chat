@@ -8,6 +8,7 @@ export default function Page({ params }: { params: { slug: string } }) {
     let clientSocket = io('http://localhost:3000')
     const [messages, setMessages] = useState<Message[]>([])
     let [username, setUsername] = useState<string>('')
+    
     useEffect(() => {
         clientSocket.on('connect', () => {
             console.log('CLIENT CONNECTED')

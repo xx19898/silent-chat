@@ -15,17 +15,13 @@ export interface User {
     id: string
 }
 
-let users: User[] = [
-    {
-        username: 'user1111',
-        id: 'xddasqwer',
-    },
-    {
-        username: 'user2222',
-        id: 'xdffaqwe',
-    },
-    {
-        username: 'user3333',
-        id: 'sdfsdsfsfdsfsfsffssfd',
-    },
-]
+export let users: string[] = ['user']
+
+export function setUsers(newUsers:string[]){
+    users = newUsers
+}
+
+export function getUsers(){
+    return users
+}
+    
